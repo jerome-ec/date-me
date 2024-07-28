@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Would you go on a date with me?</title>
+  <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+      background-color:#ff99c9;
+      background-image:
+      radial-gradient(at 69% 88%, hsla(325, 92%, 61%, 0.5) 0px, transparent 50%),
+      radial-gradient(at 28% 89%, hsla(39, 62%, 72%, 0.5) 0px, transparent 50%),
+      radial-gradient(at 94% 22%, hsla(49, 72%, 74%, 0.5) 0px, transparent 50%),
+      radial-gradient(at 98% 96%, hsla(50, 95%, 72%, 0.5) 0px, transparent 50%),
+      radial-gradient(at 90% 81%, hsla(339, 69%, 71%, 0.5) 0px, transparent 50%),
+      radial-gradient(at 97% 0%, hsla(148, 66%, 70%, 0.5) 0px, transparent 50%),
+      radial-gradient(at 85% 91%, hsla(54, 64%, 63%, 0.5) 0px, transparent 50%);
+    }
+
+    .btn {
+      min-width: 150px;
+    }
+
+    .btn-danger {
+      background-color: #ff4141;
+    }
+
+    .btn-primary {
+      background-color: #536bf5;
+    }
+
+    .modal-header {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .modal-dialog {
+      display: flex;
+      align-items: center;
+      min-height: 100%;
+      margin: auto;
+    }
+
+    .modal-content {
+      min-height: 500px;
+      margin: 30px;
+    }
+
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
+
+    .text-shadow {
+      text-shadow: 0 1px 2px #808080;
+    }
+
+    #drawing_canvas {
+      position: absolute;
+      margin: auto;
+      width: 512px;
+      height: 350px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+  }
+
+    @media screen and (min-width: 600px) {
+      .modal-dialog {
+        min-width: 600px;
+      }
+
+      .modal-content {
+        margin: 0;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+  
+  <section>
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col text-center">
+          <h2 class="text-white text-shadow">Would you go on a date with me?</h2>
+        </div>
+      </div>
+      <div class="row justify-content-center gy-4">
+        <div class="col-sm-6 col-auto">
+          <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">Yes</button>
+        </div>
+        <div class="col-auto col-sm-6 text-center text-lg-end">
+          <button class="btn btn-danger btn-lg js-btn-avoid">No</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal pop" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img src="avatar.webp" class="mb-2" height="180" alt="bakal avatar">
+          <h2>AYIIIIIIEEEEEE!!!</h2>
+          <p>(bakal)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+      const button = document.querySelector('.js-btn-avoid');
+
+      document.body.addEventListener('mousemove', (e) => {
+          const mouseX = e.clientX;
+          const mouseY = e.clientY;
+          const buttonRect = button.getBoundingClientRect();
+
+          const distanceX = Math.abs(buttonRect.left + buttonRect.width / 2 - mouseX);
+          const distanceY = Math.abs(buttonRect.top + buttonRect.height / 2 - mouseY);
+
+          const maxDistance = 50; // Maximum distance at which the button starts to move
+          
+          if (distanceX < maxDistance && distanceY < maxDistance) {
+              button.style.position = "absolute";
+              const offsetX = (mouseX - (buttonRect.left + buttonRect.width / 2)) * 0.5;
+              const offsetY = (mouseY - (buttonRect.top + buttonRect.height / 2)) * 0.5;
+
+              let newLeft = button.offsetLeft + offsetX;
+              let newTop = button.offsetTop + offsetY;
+
+              // Keep button within window boundaries
+              newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - buttonRect.width));
+              newTop = Math.max(0, Math.min(newTop, window.innerHeight - buttonRect.height));
+
+              button.style.left = `${newLeft}px`;
+              button.style.top = `${newTop}px`;
+          }
+      });
+
+      button.addEventListener('mouseover', () => {
+        // Move the button away if the mouse somehow gets over it
+        const buttonRect = button.getBoundingClientRect();
+        let newLeft = Math.random() * (window.innerWidth - buttonRect.width);
+        let newTop = Math.random() * (window.innerHeight - buttonRect.height);
+
+        button.style.left = `${newLeft}px`;
+        button.style.top = `${newTop}px`;
+      });
+
+      var btnConfetti = document.querySelector(".btn-primary");
+    
+      // When the user clicks on the button, open the modal and trigger confetti
+      btnConfetti.onclick = function() {
+        triggerConfetti();
+      }
+    
+      // Function to trigger confetti
+      function triggerConfetti() {
+        var duration = 5 * 1000;
+        var end = Date.now() + duration;
+    
+        (function frame() {
+          confetti({
+            particleCount: 2,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 }
+          });
+          confetti({
+            particleCount: 2,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 }
+          });
+    
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        }());
+      }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>
